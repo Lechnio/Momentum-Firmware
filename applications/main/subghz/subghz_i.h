@@ -6,7 +6,6 @@
 #include "subghz.h"
 #include "views/receiver.h"
 #include "views/transmitter.h"
-#include "views/subghz_frequency_analyzer.h"
 #include "views/subghz_read_raw.h"
 
 #include <gui/gui.h>
@@ -71,7 +70,6 @@ struct SubGhz {
     SubGhzViewTransmitter* subghz_transmitter;
     VariableItemList* variable_item_list;
 
-    SubGhzFrequencyAnalyzer* subghz_frequency_analyzer;
     SubGhzReadRAW* subghz_read_raw;
     bool raw_send_only;
 

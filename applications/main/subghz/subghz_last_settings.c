@@ -9,8 +9,6 @@
 
 #define SUBGHZ_LAST_SETTING_FIELD_FREQUENCY                         "Frequency"
 #define SUBGHZ_LAST_SETTING_FIELD_PRESET                            "Preset" // AKA Modulation
-#define SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_FEEDBACK_LEVEL "FeedbackLevel"
-#define SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_TRIGGER        "FATrigger"
 #define SUBGHZ_LAST_SETTING_FIELD_PROTOCOL_FILE_NAMES               "ProtocolNames"
 #define SUBGHZ_LAST_SETTING_FIELD_HOPPING_ENABLE                    "Hopping"
 #define SUBGHZ_LAST_SETTING_FIELD_IGNORE_FILTER                     "IgnoreFilter"
@@ -42,9 +40,6 @@ void subghz_last_settings_load(SubGhzLastSettings* instance, size_t preset_count
     // Default values (all others set to 0, if read from file fails these are used)
     instance->frequency = SUBGHZ_LAST_SETTING_DEFAULT_FREQUENCY;
     instance->preset_index = SUBGHZ_LAST_SETTING_DEFAULT_PRESET;
-    instance->frequency_analyzer_feedback_level =
-        SUBGHZ_LAST_SETTING_FREQUENCY_ANALYZER_FEEDBACK_LEVEL;
-    instance->frequency_analyzer_trigger = SUBGHZ_LAST_SETTING_FREQUENCY_ANALYZER_TRIGGER;
     // See bin_raw_value in scenes/subghz_scene_receiver_config.c
     instance->filter = SubGhzProtocolFlag_Decodable;
     instance->rssi = SUBGHZ_RAW_THRESHOLD_MIN;
@@ -71,20 +66,6 @@ void subghz_last_settings_load(SubGhzLastSettings* instance, size_t preset_count
             }
             if(!flipper_format_read_uint32(
                    fff_data_file, SUBGHZ_LAST_SETTING_FIELD_PRESET, &instance->preset_index, 1)) {
-                flipper_format_rewind(fff_data_file);
-            }
-            if(!flipper_format_read_uint32(
-                   fff_data_file,
-                   SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_FEEDBACK_LEVEL,
-                   &instance->frequency_analyzer_feedback_level,
-                   1)) {
-                flipper_format_rewind(fff_data_file);
-            }
-            if(!flipper_format_read_float(
-                   fff_data_file,
-                   SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_TRIGGER,
-                   &instance->frequency_analyzer_trigger,
-                   1)) {
                 flipper_format_rewind(fff_data_file);
             }
             if(!flipper_format_read_bool(
@@ -214,20 +195,6 @@ bool subghz_last_settings_save(SubGhzLastSettings* instance) {
         }
         if(!flipper_format_write_uint32(
                file, SUBGHZ_LAST_SETTING_FIELD_PRESET, &instance->preset_index, 1)) {
-            break;
-        }
-        if(!flipper_format_write_uint32(
-               file,
-               SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_FEEDBACK_LEVEL,
-               &instance->frequency_analyzer_feedback_level,
-               1)) {
-            break;
-        }
-        if(!flipper_format_write_float(
-               file,
-               SUBGHZ_LAST_SETTING_FIELD_FREQUENCY_ANALYZER_TRIGGER,
-               &instance->frequency_analyzer_trigger,
-               1)) {
             break;
         }
         if(!flipper_format_write_bool(
