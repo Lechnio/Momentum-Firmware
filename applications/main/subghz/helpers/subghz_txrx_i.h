@@ -32,5 +32,7 @@ struct SubGhzTxRx {
     //unrelated file
     bool tx_from_internal_fff;
 
+    size_t tx_min_heap_required;
+
     bool debug_pin_state;
 };
